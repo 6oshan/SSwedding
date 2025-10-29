@@ -1,0 +1,486 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Shirdi & Sreya{% endblock %}
+
+{% block content %}
+
+<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5 pb-5" id="home">
+    <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for slide in sliders %}
+            <div class="carousel-item position-relative {% if forloop.first %}active{% endif %}"
+                style="height: 100vh; min-height: 400px;">
+                <picture>
+                    <source media="(max-width:500px)"
+                        srcset="{{ slide.mobile_image.url |default:'../static/img/s&s/ss6.jpg' }}">
+                    <img class="position-absolute w-100 h-100"
+                        src="{{ slide.desktop_image.url |default:'../static/img/s&s/ss6.jpg' }}" alt="{{ slide.title }}"
+                        loading="lazy">
+                </picture>
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 900px;">
+                        <h1 class="display-1 font-secondary text-white mt-n3 mb-md-4">Shirdi & Sreya</h1>
+                        <div class="d-inline-block border-top border-bottom border-light py-3 px-4">
+                            <h3 class="text-uppercase font-weight-normal text-white m-0" style="letter-spacing: 2px;">
+                                {{slide.description | default:"We're getting married"}}</h3>
+                        </div>
+                        <button type="button" class="btn-play mx-auto" data-toggle="modal"
+                            data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-target="#videoModal">
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev justify-content-start" href="#header-carousel" data-slide="prev">
+            <div class="btn btn-primary nextprev px-0" style="width: 40px; height: 68px;">
+                <span class="carousel-control-prev-icon mt-3"></span>
+            </div>
+        </a>
+        <a class="carousel-control-next justify-content-end" href="#header-carousel" data-slide="next">
+            <div class="btn btn-primary nextprev px-0" style="width: 40px; height: 68px;">
+                <span class="carousel-control-next-icon mt-3"></span>
+            </div>
+        </a>
+    </div>
+</div>
+<!-- Carousel End -->
+
+
+<!-- Video Modal Start -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <!-- 16:9 aspect ratio -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="{{ Y_link.last.youtube_link }} " title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Video Modal End -->
+
+
+<!-- About Start -->
+<div class="container-fluid py-5" id="about">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary mb-3 bottomToOrigin" style="letter-spacing: 3px;">About</h6>
+            <h1 class="font-secondary display-4 bottomToOrigin">Groom & Bride</h1>
+            <i class="far fa-heart text-dark"></i>
+        </div>
+        <div class="row m-0 mb-4 mb-md-0 pb-2 pb-md-0">
+            <div class="col-md-6 leftToOrigin p-0 text-center text-md-right cardShadow">
+                <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-5">
+                    <h3 class="mb-3">The Groom</h3>
+                    {% if groom %}
+                    <p>{{groom.description}}</p>
+                    {% else %}
+                    <p>A pure creative soul. Wicked in all wonderful ways possible. Always holding on to the loved ones
+                        whatever it takes. Artists, photographer,dancer, designer, moreover someone to rely on.</p>
+                    {% endif %}
+
+                    <h3 class="font-secondary font-weight-normal text-muted mb-3"><i
+                            class="fa fa-male text-primary pr-3"></i>Shirdi Asok</h3>
+                    <div class="position-relative">
+                        <a class="btn btn-outline-primary btn-square" href="https://www.instagram.com/shirdiasok/"
+                            target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 rightToOrigin cardShadow" style="min-height: 400px;">
+                {% if groom %}
+                <img class="position-absolute w-100 h-100" src="{{ groom.image.url }}" alt="{{ groom_image.title }}"
+                    style="object-fit: cover;" loading="lazy">
+                {% else %}
+                <img class="position-absolute w-100 h-100" src="../static/img/sands/Groom.jpg"
+                    style="object-fit: cover;" loading="lazy">
+                {% endif %}
+            </div>
+        </div>
+        <div class="row m-0">
+            <div class="col-md-6 p-0 leftToOrigin cardShadow" style="min-height: 400px;">
+                {% if bride %}
+                <img class="position-absolute w-100 h-100" src="{{ bride.image.url }}" alt="{{ bride.title }}"
+                    style="object-fit: cover;" loading="lazy">
+                {% else %}
+                <img class="position-absolute w-100 h-100" src="../static/img/sands/Bride.jpg"
+                    style="object-fit: cover;" loading="lazy">
+                {% endif %}
+
+            </div>
+            <div class="col-md-6 rightToOrigin cardShadow p-0 text-center text-md-left">
+                <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-5">
+                    <h3 class="mb-3">The Bride</h3>
+                    {%if bride %}
+                    <p>{{ bride.description }}</p>
+                    {% else %}
+                    <p>Innocent like an infant. Care giver, always a comfy place. Nurturers like a mother,guides like a
+                        teacher and emotionally so hard to handle.Dancer, bakes all things sweet. Cutest thing one
+                        could ever wish for.</p>
+                    {% endif %}
+
+                    <h3 class="font-secondary font-weight-normal text-muted mb-3"><i
+                            class="fa fa-female text-primary pr-3"></i>Sreya S</h3>
+                    <div class="position-relative">
+                        <a class="btn btn-outline-primary btn-square" href="https://www.instagram.com/sreyaaa_sreee/"
+                            target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+
+<!-- Story Start -->
+<div class="container-fluid py-5" id="story">
+    <div class="container pt-5 pb-3">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary bottomToOrigin  mb-3" style="letter-spacing: 3px;">Story</h6>
+            <h1 class="font-secondary bottomToOrigin display-4">Our Love Story</h1>
+            <i class="far fa-heart text-dark"></i>
+        </div>
+        <div class="container timeline position-relative p-0">
+            <div class="row">
+                <div class="col-md-6 bottomToOrigin text-center text-md-right">
+                    <img class="img-fluid mr-md-3 StoryImg" src="../static/img/Our Love Story/First Meet.jpg" alt=""
+                        loading="lazy">
+                </div>
+                <div class="col-md-6 text-center text-md-left bottomToOrigin cardShadow">
+                    <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 ml-md-3">
+                        <h4 class="mb-2">First Meet</h4>
+                        <p class="text-uppercase mb-2">22 Aug 2011</p>
+                        <p class="m-0">The composition of nature is very obvious. We first met in a place where most of
+                            the people would have met their first love, or at least prayed for one. A Shrikrishna
+                            Janmashtami evening at our Peedika Bhagavathi temple Karavaloor.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center text-md-right bottomToOrigin cardShadow">
+                    <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                        <h4 class="mb-2">First Date</h4>
+                        <p class="text-uppercase mb-2">Dec 2016</p>
+                        <p class="m-0">Dates are of course for people who go by the books. For us, whenever we meet we'd
+                            likely end up mocking each other, laughing at each other or worst case scenario ending up in
+                            a fight. Anyway there are very few times we literally set apart with a smile.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-left bottomToOrigin">
+                    <img class="img-fluid ml-md-3 StoryImg" src="../static/img/Our Love Story/First Date.jpg" alt=""
+                        loading="lazy">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center text-md-right bottomToOrigin">
+                    <img class="img-fluid mr-md-3 StoryImg" src="../static/img/Our Love Story/Proposal.jpg" alt=""
+                        loading="lazy">
+                </div>
+                <div class="col-md-6 text-center text-md-left bottomToOrigin cardShadow">
+                    <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 ml-md-3">
+                        <h4 class="mb-2">Proposal</h4>
+                        <p class="text-uppercase mb-2">Dec 2017</p>
+                        <p class="m-0">It wasn't official till we decided to open up our heart not to ourselves but to
+                            our parents. We didn't had a romantic dine out or a long ride and music playing in the
+                            background while I stood on my knees and proposed to her. Obviously our chemistry
+                            doesn't work that way.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center text-md-right bottomToOrigin cardShadow">
+                    <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4 mr-md-3">
+                        <h4 class="mb-2">Enagagement</h4>
+                        <p class="text-uppercase mb-2">Dec 15 2024</p>
+                        <p class="m-0">It was the big announcement. Days of anticipation, manifestation, imaginations
+                            and struggle. She ended up in the hospital and I ended up paying bills for that after our
+                            big day of engagement. Like the always say.. life comes with ups and downs</p>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-left bottomToOrigin">
+                    <img class="img-fluid ml-md-3 StoryImg" src="../static/img/Our Love Story/Enagagement.jpg" alt=""
+                        loading="lazy">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Story End -->
+
+
+<!-- Gallery Start -->
+<div class="container-fluid bg-gallery" id="gallery" style="padding: 120px 0; margin: 90px 0;">
+    <div class="section-title position-relative text-center" style="margin-bottom: 120px;">
+        <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Gallery</h6>
+        <h1 class="font-secondary display-4 text-white">Our Photo Gallery</h1>
+        <i class="far fa-heart text-white"></i>
+    </div>
+    <div class="owl-carousel gallery-carousel">
+        {% for img in gallery %}
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+            <a href="{{ img.image.url }}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+            <a id="downloadButon" href="{{ img.image.url }}" download class="btn btn-sm  position-absolute">
+                <i class="fa fa-download"></i>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- Gallery End -->
+
+
+<!-- Event Start -->
+<div class="container-fluid py-5" id="event">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary mb-3 bottomToOrigin" style="letter-spacing: 3px;">Event</h6>
+            <h1 class="font-secondary display-4 bottomToOrigin">Our Wedding Event</h1>
+            <i class="far fa-heart text-dark"></i>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h5 class="font-weight-normal bottomToOrigin text-muted mb-3 pb-3">More than an event we'd like to
+                    visualise a dream which we both shared for a long time, with all your blessings and happiness.
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 border-right border-primary EventCard bottomToOrigin">
+                <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0 ">
+                    <div class="eventImg  mb-4"><img class="img-fluid" src="../static/img/Events/weddingstage.jpg"
+                            alt="" loading="lazy"></div>
+                    <h4 class="mb-3">The Cermony</h4>
+                    <p class="mb-0">November 23 , 2025</p>
+                    <p class="mb-0">11:30AM - 11:50AM</p>
+                    <p class="mb-2">Koyippuram Auditorium Karavaloor</p>
+                    <div><a href="https://www.google.com/maps/dir//XWJF%2B2WH+Koyipuram+Auditorium,+Karavaloor,+Kerala+691333/@8.9800555,76.9222952,17z/data=!4m17!1m7!3m6!1s0x3b06767384abf8df:0x362f28f36e665ae!2sKoyipuram+Auditorium!8m2!3d8.9800555!4d76.9248701!16s%2Fg%2F11csrqhzzm!4m8!1m0!1m5!1m1!1s0x3b06767384abf8df:0x362f28f36e665ae!2m2!1d76.9248324!2d8.9800503!3e9?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank">Location</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 EventCard bottomToOrigin">
+                <div class="text-center text-md-left ml-md-3 ">
+                    <div class="eventImg mb-4"><img class="img-fluid " src="../static/img/Events/reception.jpg" alt=""
+                            loading="lazy">
+                    </div>
+                    <h4 class="mb-3">The Reception</h4>
+                    <p class="mb-0">November 23 , 2025</p>
+                    <p class="mb-0">5:00 pm</p>
+                    <p class="mb-2">Koyippuram Auditorium Karavaloor</p>
+                    <div><a href="https://www.google.com/maps/dir//XWJF%2B2WH+Koyipuram+Auditorium,+Karavaloor,+Kerala+691333/@8.9800555,76.9222952,17z/data=!4m17!1m7!3m6!1s0x3b06767384abf8df:0x362f28f36e665ae!2sKoyipuram+Auditorium!8m2!3d8.9800555!4d76.9248701!16s%2Fg%2F11csrqhzzm!4m8!1m0!1m5!1m1!1s0x3b06767384abf8df:0x362f28f36e665ae!2m2!1d76.9248324!2d8.9800503!3e9?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank">Location</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 border-right border-primary EventCard bottomToOrigin">
+                <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0 secondRow">
+                    <div class="eventImg  mb-4"><img class="img-fluid" src="../static/img/Events/Haldi.jpg" alt=""
+                            loading="lazy">
+                    </div>
+                    <h4 class="mb-3">Haldi</h4>
+                    <p class="mb-0">November 22 , 2025</p>
+                    <p class="mb-0">8:00AM - 8:30am</p>
+                    <p class="mb-2">Brides place Karavaloor</p>
+                    <div><a href="https://www.google.com/maps/dir/8.980759,76.9287375/8.9808069,76.9287499/@8.9806163,76.928376,105m/data=!3m1!1e3!4m2!4m1!3e9?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank">Location</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 EventCard bottomToOrigin">
+                <div class="text-center text-md-left ml-md-3 secondRow">
+                    <div class="eventImg mb-4"><img class="img-fluid " src="../static/img/Events/TeaParty.jpeg" alt=""
+                            loading="lazy">
+                    </div>
+                    <h4 class="mb-3">Tea party</h4>
+                    <p class="mb-0">November 22 , 2025</p>
+                    <p class="mb-0">8:00PM - 8:30PM</p>
+                    <p class="mb-2">Brides place Karavaloor</p>
+                    <div><a href="https://www.google.com/maps/dir/8.980759,76.9287375/8.9808069,76.9287499/@8.9806163,76.928376,105m/data=!3m1!1e3!4m2!4m1!3e9?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank">Location</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Event End -->
+<div class="eventPartners">
+    <div class="section-title position-relative text-center">
+        <h6 class="text-uppercase text-primary mb-3 bottomToOrigin" style="letter-spacing: 3px;">Event Partners</h6>
+        <h1 class="font-secondary display-4 bottomToOrigin">Our Wedding Event Partners</h1>
+        <i class="far fa-heart text-dark"></i>
+    </div>
+    <div>
+        <div class="partners-grid">
+            <div class="partner-card bottomToOrigin">
+                <div class="partner-title">B4 Wedding Company</div>
+                <div class="partner-icon">
+                    <img src="../static/img/icons/B4Icon.png" alt="B4 Wedding Company Icon">
+                </div>
+                <div class="partner-content">
+                    <p>"Wedding studio specializing in photography, cinematography, and creative storytelling."</p>
+                    <div class="position-relative">
+                        <a class="insta-btn"
+                            href="https://www.instagram.com/b4_wedding_company?igsh=MTY3OG92bG03b3Frdw=="
+                            target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="partner-card bottomToOrigin">
+                <div class="partner-title">Unique Wedding Event</div>
+                <div class="partner-icon">
+                    <img src="../static/img/icons/uniqueIcon.png" alt="Unique Wedding Icon">
+                </div>
+                <div class="partner-content">
+                    <p>"Unique Wedding Event Planners — where creativity meets elegance. We design and manage weddings
+                        that reflect your unique taste, style, and story."</p>
+                    <div class="position-relative">
+                        <a class="insta-btn"
+                            href="https://www.instagram.com/unique__weddings_eventplanner?igsh=MTlqZms1b2ZtZW04NQ=="
+                            target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Friends & Family Start -->
+<!-- <div class="container-fluid py-5" id="family">
+    <div class="container pt-5 pb-3">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Friends & Family</h6>
+            <h1 class="font-secondary display-4">Groomsmen & Bridesmaid</h1>
+            <i class="far fa-heart text-dark"></i>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center mb-2">
+                <ul class="list-inline mb-4" id="portfolio-flters">
+                    <li class="btn btn-outline-primary font-weight-bold m-1 py-2 px-4" data-filter=".first">
+                        Groomsmen</li>
+                    <li class="btn btn-outline-primary font-weight-bold m-1 py-2 px-4" data-filter=".second">
+                        Bridesmaid</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row portfolio-container">
+            <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
+                <div class="position-relative mb-2">
+                    <img class="img-fluid w-100" src="../static/img/groomsmen-1.jpg" alt="" loading="lazy">
+                    <div class="bg-secondary text-center p-4">
+                        <h4 class="mb-3">Full Name</h4>
+                        <p class="text-uppercase">Best Friend</p>
+                        <div class="d-inline-block">
+                            <a class="mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-2" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
+                <div class="position-relative mb-2">
+                    <img class="img-fluid w-100" src="../static/img/bridesmaid-1.jpg" alt="" loading="lazy">
+                    <div class="bg-secondary text-center p-4">
+                        <h4 class="mb-3">Full Name</h4>
+                        <p class="text-uppercase">Best Friend</p>
+                        <div class="d-inline-block">
+                            <a class="mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-2" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- Friends & Family End -->
+
+
+<!-- RSVP Start -->
+<!-- <div class="container-fluid py-5" id="rsvp">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">RSVP</h6>
+            <h1 class="font-secondary display-4">Join Our Party</h1>
+            <i class="far fa-heart text-dark"></i>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <input type="text" class="form-control bg-secondary border-0 py-4 px-3"
+                                    placeholder="Your Name" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <input type="email" class="form-control bg-secondary border-0 py-4 px-3"
+                                    placeholder="Your Email" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <select class="form-control bg-secondary border-0" style="height: 52px;">
+                                    <option>Number of Guest</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <select class="form-control bg-secondary border-0" style="height: 52px;">
+                                    <option>I'm Attending</option>
+                                    <option>All Events</option>
+                                    <option>Wedding Party</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control bg-secondary border-0 py-2 px-3" rows="5"
+                                placeholder="Message" required="required"></textarea>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary font-weight-bold py-3 px-5" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- RSVP End -->
+
+{% endblock %}
