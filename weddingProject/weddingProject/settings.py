@@ -69,7 +69,10 @@ TEMPLATES = [
     },
 ]
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'wedding/static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # <-- add this
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'wedding', 'static'),
+]
 
 WSGI_APPLICATION = 'weddingProject.wsgi.application'
 
@@ -119,7 +122,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Path on your server where uploaded files will be stored
 MEDIA_URL = '/media/'
